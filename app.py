@@ -21,5 +21,4 @@ def register():
 	return "successfully registered"
 	 
 if __name__== "__main__":
-	print("running..\n\n")
 	app.run()

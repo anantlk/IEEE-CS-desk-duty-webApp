@@ -2,15 +2,62 @@
 <html>
 	<head>
 		<title>Register</title>
+
+		<meta name = "viewport" content = "width = device-width, initial-scale = 1">
+		<meta name="description" content="IEEE CS details register"> 
+		<meta name="author" content="Anant Kakrania">     
+
+        <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+      	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	<style>
+	input:focus
+	{
+		box-shadow:0px;
+	}
+	</style>
 	</head>
-	<body>
-		<form name="register" method="post" action="/register">
-			<input name="regno" type="text" placeholder="regno" required /><br>
-			<input name="password" type="password" placeholder="password" required /><br>
-			<input name="email" type="email" placeholder="email" required /><br>
-			<input name="mobile" type="text" pattern="[0-9]{10}" placeholder="mobile" required /><br>
-			<input name="branch" type="text" placeholder="branch" required /><br>
-			<input type="submit" value="Submit"/>
-		</form>
+	<body class="container">
+		<div class = "row">
+         <form class = "col s12" name="register" action="/register" method="post">
+            <div class = "row col s10 m6 offset-s1 offset-m3">
+               <div class = "input-field col s12">
+                  <i class = "large material-icons prefix">account_circle</i>
+                  <label for = "regno">Username</label>
+                  <input id = "regno" name="regno" type = "text" class = "validate" required />
+               </div>
+               
+               <div class = "input-field col s12"> 
+               	  <i class="material-icons prefix">lock</i>     
+                  <label for = "password">Password</label>
+                  <input id = "password" name="password" type = "password"  class = "validate" required />          
+               </div>
+      
+               <div class = "input-field col s12">
+               	  <i class="material-icons prefix">email</i>
+               	  <label for = "email">Email</label>
+                  <input id = "email" name="email" type = "email" class = "validate">
+               </div>
+
+               <div class = "input-field col s12">
+               	  <i class="material-icons prefix">call</i>
+               	  <label for = "email">Mobile No</label>
+                  <input id = "mobile" name="mobile" type = "text" pattern="[0-9]{10}" class = "validate">
+               </div>
+
+               <div class = "input-field col s12">
+               	  <i class="material-icons prefix">book</i>
+               	  <label for = "branch">Branch</label>
+                  <input id = "branch" name="branch" type = "text" class = "validate">
+               </div>
+               <div class="input-field col s12">
+	              <button class="btn waves-effect waves-light col offset-s3 offset-m5" type="submit" name="action">Submit
+					  <i class="material-icons right">send</i>
+				  </button>
+				</div>
+            </div>
+        </form>
 	</body>
 </html>
