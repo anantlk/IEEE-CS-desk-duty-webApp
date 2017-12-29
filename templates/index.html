@@ -13,13 +13,34 @@
       	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
       	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<style>
-	input:focus
+	*
 	{
-		box-shadow:0px;
+		box-shadow:0px !important;
+	}
+	body
+	{
+		overflow-y:auto;
+		background-color:#122122;
+		background-size:cover;
+		background-position: center;
+		background-attachment: fixed;
+	}
+	i
+	{
+		color:white;
+	}
+	img
+	{
+		width:220px;
+		padding:20px 0px 5px 0px;
 	}
 	</style>
 	</head>
 	<body class="container">
+		<div class="row" style="text-align:center;">
+		<img  src="../images/CS-logo.png"/>
+		</div>
+		</div>
 		<div class = "row">
          <form class = "col s12" name="register" action="/register" method="post">
             <div class = "row col s10 m6 offset-s1 offset-m3">
