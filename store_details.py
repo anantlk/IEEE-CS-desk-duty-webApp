@@ -13,9 +13,12 @@ def store(regno,mobile,email,branch):
 	"email":email,
 	"branch":branch
 	}
-	det=db.stud_det
-	result=det.insert_one(details)
-
+	if(regno=="16[a-zA-Z]{3}[0-9]{4}"):
+		det=db.stud_det
+		result=det.insert_one(details)
+	if(regno=="17[a-zA-Z]{3}[0-9]{4}"):
+		det=db.stud_det1
+		result=det.inser_one(deatils)
 
 #storing details of the schedule of the student in the database
 
