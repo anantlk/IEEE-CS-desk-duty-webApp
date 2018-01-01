@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import collections
+import re
 client=MongoClient('mongodb://localhost:27017');
 db=client.StudentDetails
 days=["monday","tuesday","wednesday","thursday","friday"]
@@ -13,10 +14,10 @@ def store(regno,mobile,email,branch):
 	"email":email,
 	"branch":branch
 	}
-	if(regno=="16[a-zA-Z]{3}[0-9]{4}"):       #for 2016 batch students
+	if(re.match("16[a-zA-Z]{3}[0-9]{4}",regno)):       #for 2016 batch students
 		det=db.stud_det
 		result=det.insert_one(details)
-	if(regno=="17[a-zA-Z]{3}[0-9]{4}"):       #for 2017 batch students
+	if(re.match("17[a-zA-Z]{3}[0-9]{4}",regno)):       #for 2017 batch students
 		det=db.stud_det1
 		result=det.inser_one(deatils)
 
