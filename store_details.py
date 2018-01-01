@@ -13,10 +13,10 @@ def store(regno,mobile,email,branch):
 	"email":email,
 	"branch":branch
 	}
-	if(regno=="16[a-zA-Z]{3}[0-9]{4}"):
+	if(regno=="16[a-zA-Z]{3}[0-9]{4}"):       #for 2016 batch students
 		det=db.stud_det
 		result=det.insert_one(details)
-	if(regno=="17[a-zA-Z]{3}[0-9]{4}"):
+	if(regno=="17[a-zA-Z]{3}[0-9]{4}"):       #for 2017 batch students
 		det=db.stud_det1
 		result=det.inser_one(deatils)
 
