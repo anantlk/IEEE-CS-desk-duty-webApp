@@ -22,7 +22,6 @@ def register():
 	Email=request.form["email"]
 	Mobile=request.form["mobile"]
 	Branch=request.form["branch"]
-	Data=api_call.req(RegNo,Password)
 	store_details.store(RegNo,Mobile,Email,Branch)
 	timeT=timetable.get_timetable(RegNo,Password)
 	store_details.store_time_table(timeT,RegNo)
