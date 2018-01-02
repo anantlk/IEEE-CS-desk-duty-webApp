@@ -4,13 +4,13 @@
 # date - 24/09/2017
 
 
-
 from PIL import Image
 import sys
-sys.path.insert(0,'.\data')
+sys.path.insert(0, '.\data')
 from bitmaps import bitmap
 
 letters = "abcdefghijklmnpqrstuvwxyz123456789"
+
 
 def CaptchaParse(img):
     captcha = ""
