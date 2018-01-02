@@ -32,5 +32,4 @@ def store_time_table(timetable,regno):
 		for pos_day_schedule in range(len(timetable[i])):
 			schd[regno][str(pos_day_schedule+1)]=str(timetable[i][pos_day_schedule])
 		TimeTable.update_one({"day":day},{"$push":{"schedule":schd}})
-	print(schd)
 
