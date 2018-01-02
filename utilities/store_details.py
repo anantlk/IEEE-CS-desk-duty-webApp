@@ -27,11 +27,12 @@ def store(regno, mobile, email, branch):
 
 
 def store_time_table(timetable, regno):
-    time_table = db.schedule
+    time_table = db.table
     schd = collections.OrderedDict()
     for day in days:
         i = days.index(day)
-        schd[str(regno)] = collections.OrderedDict()
+        schd["regno"]=regno
+        schd["day_routine"]=collections.OrderedDict()
         for pos_day_schedule in range(len(timetable[i])):
-            schd[regno][str(pos_day_schedule + 1)] = str(timetable[i][pos_day_schedule])
+            schd["day_routine"][str(pos_day_schedule + 1)] = str(timetable[i][pos_day_schedule])
         time_table.update_one({"day": day}, {"$push": {"schedule": schd}})
