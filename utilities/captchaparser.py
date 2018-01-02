@@ -6,7 +6,8 @@
 
 from PIL import Image
 import sys
-sys.path.insert(0, '.\data')
+import os
+sys.path.insert(0, os.path.join(os.getcwd(), 'data'))
 from bitmaps import bitmap
 
 letters = "abcdefghijklmnpqrstuvwxyz123456789"
