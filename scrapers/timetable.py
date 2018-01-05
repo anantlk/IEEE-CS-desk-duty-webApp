@@ -1,5 +1,6 @@
 import requests
 import os
+import re
 from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
@@ -10,6 +11,7 @@ import sys
 sys.path.insert(0, '.\utilities')
 print(os.path.abspath(sys.path[0]))
 from captchaparser import CaptchaParse
+import interact_database
 
 semSubId = 'VL2017185'
 
@@ -22,38 +24,46 @@ headers = {
 
 def login_user(regno, password):
     try:
-        main_page = requests.get(
-            'https://vtopbeta.vit.ac.in/vtop/',
-            headers=headers,
-            verify=False)
+		if(regno[:2]=="16"):
+			if(interact_database.check_database(regno,"16")==0):
+				return 2
+				
+		if(regno[:2]=="17"):
+			if(interact_database.check_database(regno,"17")==0):
+				return 2
+				
+		main_page = requests.get(
+			'https://vtopbeta.vit.ac.in/vtop/',
+			headers=headers,
+			verify=False)
+			
+		# session_cookie
+		session_cookie = main_page.cookies['JSESSIONID']
+		session_cookie = 'JSESSIONID=' + session_cookie
+		headers.update({'cookie': session_cookie})
 
-        # session_cookie
-        session_cookie = main_page.cookies['JSESSIONID']
-        session_cookie = 'JSESSIONID=' + session_cookie
-        headers.update({'cookie': session_cookie})
+		# captcha solving
+		root = BeautifulSoup(main_page.text, "html.parser")
+		img_data = root.find_all("img")[1][
+			"src"].strip("data:image/png;base64,")
 
-        # captcha solving
-        root = BeautifulSoup(main_page.text, "html.parser")
-        img_data = root.find_all("img")[1][
-            "src"].strip("data:image/png;base64,")
+		img = Image.open(BytesIO(base64.b64decode(img_data)))
+		captcha_check = CaptchaParse(img)
 
-        img = Image.open(BytesIO(base64.b64decode(img_data)))
-        captcha_check = CaptchaParse(img)
+		# user login
+		login_data = {
+			'uname': regno,
+			'passwd': password,
+			'captchaCheck': captcha_check}
 
-        # user login
-        login_data = {
-            'uname': regno,
-            'passwd': password,
-            'captchaCheck': captcha_check}
-
-        login = requests.post(
-            'https://vtopbeta.vit.ac.in/vtop/processLogin',
-            headers=headers,
-            data=login_data,
-            verify=False)
-        return True
+		login = requests.post(
+			'https://vtopbeta.vit.ac.in/vtop/processLogin',
+			headers=headers,
+			data=login_data,
+			verify=False)
+		return 1
     except:
-        return False
+        return 0
 
 
 def timetable_scrape():
@@ -96,7 +106,8 @@ def timetable_scrape():
 
 
 def get_timetable(user, password):
-    if login_user(user, password):
+    login_result=login_user(user,password)
+    if login_result==1:
         return timetable_scrape()
     else:
-        print("Error in Login")
+        return login_result

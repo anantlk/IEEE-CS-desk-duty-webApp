@@ -24,8 +24,13 @@ def register():
     email = request.form["email"]
     mobile = request.form["mobile"]
     branch = request.form["branch"]
-    store_details.store(reg_no, mobile, email, branch)
     fetched_tt = timetable.get_timetable(reg_no, password)
+    if(fetched_tt==2):
+		return "User Already Exists!"
+		
+	#if(fetched_tt==0):
+		#return "Incorrect Password!",0
+    store_details.store(reg_no, mobile, email, branch)
     store_details.store_time_table(fetched_tt, reg_no)
     return "successfully registered"
 

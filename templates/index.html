@@ -87,11 +87,17 @@
 				url:"/register",
 				data:$('form').serialize(),
 				type:"POST",
-				success:function(){
-					swal("Success","Successfully Registered!!","success");
+				success:function(msg){
+						console.log(msg+"I am in success")
+						swal("Success",msg,"success");
+
 				},
-				error:function(){
-					swal("OOPS","Invalid Credientials","error");
+				error:function(msg){
+					console.log(msg+"I am in error")
+					//if(status==2)
+						//swal("OOOPS",msg,"error");
+					//if(status==0)
+						swal("OOPS",msg,"error");
 				}
 			});
 		});
