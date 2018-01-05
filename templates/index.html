@@ -57,19 +57,19 @@
                <div class = "input-field col s12">
                	  <i class="material-icons prefix">email</i>
                	  <label for = "email">Email</label>
-                  <input id = "email" name="email" type = "email" class = "validate">
+                  <input id = "email" name="email" type = "email" class = "validate" required />
                </div>
 
                <div class = "input-field col s12">
                	  <i class="material-icons prefix">call</i>
                	  <label for = "email">Mobile No</label>
-                  <input id = "mobile" name="mobile" type = "text" pattern="[0-9]{10}" class = "validate">
+                  <input id = "mobile" name="mobile" type = "text" pattern="[0-9]{10}" class = "validate" required/>
                </div>
 
                <div class = "input-field col s12">
                	  <i class="material-icons prefix">book</i>
                	  <label for = "branch">Branch</label>
-                  <input id = "branch" name="branch" type = "text" class = "validate">
+                  <input id = "branch" name="branch" type = "text" class = "validate" required />
                </div>
                <div class="input-field col s12">
 	              <button class="btn waves-effect waves-light col offset-s3 offset-m5" type="button" name="action">Submit
@@ -87,17 +87,22 @@
 				url:"/register",
 				data:$('form').serialize(),
 				type:"POST",
-				success:function(msg){
+				success:function(status){
 						console.log(msg+"I am in success")
-						swal("Success",msg,"success");
+						if(status==1)
+							swal("Success","Succesfully Registered","success");
+						if(status==2)
+							swal("OOOPS","User Exists","error");
+						if(status==0)
+							swal("OOPS","Incorrect Credentials","error");
 
 				},
-				error:function(msg){
-					console.log(msg+"I am in error")
+				error:function(status){
+					console.log("I am in error")
 					//if(status==2)
 						//swal("OOOPS",msg,"error");
 					//if(status==0)
-						swal("OOPS",msg,"error");
+						swal("OOPS","Error","error");
 				}
 			});
 		});

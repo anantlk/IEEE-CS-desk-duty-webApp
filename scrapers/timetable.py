@@ -107,6 +107,7 @@ def timetable_scrape():
 
 def get_timetable(user, password):
     login_result=login_user(user,password)
+    print(login_result)
     if login_result==1:
         return timetable_scrape()
     else:
