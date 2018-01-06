@@ -8,8 +8,8 @@ import base64
 from pprint import pprint
 
 import sys
-sys.path.insert(0, '.\utilities')
-print(os.path.abspath(sys.path[0]))
+sys.path.insert(0, os.path.join(os.getcwd(), 'data'))
+
 from captchaparser import CaptchaParse
 import interact_database
 
@@ -24,44 +24,47 @@ headers = {
 
 def login_user(regno, password):
     try:
-		if(regno[:2]=="16"):
-			if(interact_database.check_database(regno,"16")==0):
-				return 2
-				
-		if(regno[:2]=="17"):
-			if(interact_database.check_database(regno,"17")==0):
-				return 2
-				
-		main_page = requests.get(
-			'https://vtopbeta.vit.ac.in/vtop/',
-			headers=headers,
-			verify=False)
-			
-		# session_cookie
-		session_cookie = main_page.cookies['JSESSIONID']
-		session_cookie = 'JSESSIONID=' + session_cookie
-		headers.update({'cookie': session_cookie})
+        if(regno[:2] == "16"):
+            if(interact_database.check_database(regno, "16") == 0):
+                return 2
 
-		# captcha solving
-		root = BeautifulSoup(main_page.text, "html.parser")
-		img_data = root.find_all("img")[1][
-			"src"].strip("data:image/png;base64,")
+        if(regno[:2] == "17"):
+            if(interact_database.check_database(regno, "17") == 0):
+                return 2
 
-		img = Image.open(BytesIO(base64.b64decode(img_data)))
-		captcha_check = CaptchaParse(img)
+        main_page = requests.get(
+            'https://vtopbeta.vit.ac.in/vtop/',
+                headers=headers,
+                verify=False)
 
-		# user login
-		login_data = {
-			'uname': regno,
-			'passwd': password,
-			'captchaCheck': captcha_check}
+        # session_cookie
+        session_cookie = main_page.cookies['JSESSIONID']
+        session_cookie = 'JSESSIONID=' + session_cookie
+        headers.update({'cookie': session_cookie})
 
-		login = requests.post(
-			'https://vtopbeta.vit.ac.in/vtop/processLogin',
-			headers=headers,
-			data=login_data,
-			verify=False)
-		return 1
+        # captcha solving
+        root = BeautifulSoup(main_page.text, "html.parser")
+        img_data = root.find_all("img")[1][
+            "src"].strip("data:image/png;base64,")
+
+        img = Image.open(BytesIO(base64.b64decode(img_data)))
+        captcha_check = CaptchaParse(img)
+
+        # user login
+        login_data = {
+            'uname': regno,
+                'passwd': password,
+                'captchaCheck': captcha_check}
+
+        login = requests.post(
+            'https://vtopbeta.vit.ac.in/vtop/processLogin',
+                headers=headers,
+                data=login_data,
+                verify=False)
+        login_response = BeautifulSoup(login.text, "html.parser")
+        if 'Invalid Username/Password, Please try again' in login_response.text:
+            return 0
+        return 1
     except:
         return 0
 
@@ -106,9 +109,8 @@ def timetable_scrape():
 
 
 def get_timetable(user, password):
-    login_result=login_user(user,password)
-    print(login_result)
-    if login_result==1:
+    login_result = login_user(user, password)
+    if login_result == 1:
         return timetable_scrape()
     else:
         return login_result
