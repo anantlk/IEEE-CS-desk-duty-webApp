@@ -8,7 +8,7 @@ import base64
 from pprint import pprint
 
 import sys
-sys.path.insert(0, os.path.join(os.getcwd(), 'data'))
+sys.path.insert(0, os.path.join(os.getcwd(), 'utilities'))
 
 from captchaparser import CaptchaParse
 import interact_database
