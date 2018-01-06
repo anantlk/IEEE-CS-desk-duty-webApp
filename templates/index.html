@@ -90,22 +90,19 @@
 				url: "/register",
 				data: $('form').serialize(),
 				type: "POST",
-				success: function (status) {
+				success: function (msg) {
 					console.log(msg + "I am in success")
-					if (status == 1)
-						swal("Success", "Succesfully Registered", "success");
-					if (status == 2)
-						swal("OOOPS", "User Exists", "error");
-					if (status == 0)
-						swal("OOPS", "Incorrect Credentials", "error");
+					if (msg == "success")
+						swal("Success", "Succesfully Registered!", "success");
+					if (msg == "exists")
+						swal("OOPS", "User Already Registered!", "error");
+					if (msg == "Incorrect")
+						swal("OOPS", "Incorrect Credentials!", "error");
 
 				},
-				error: function (status) {
+				error: function (msg) {
 					console.log("I am in error")
-					//if(status==2)
-					//swal("OOOPS",msg,"error");
-					//if(status==0)
-					swal("OOPS", "Error", "error");
+					swal("OOPS", "Error in Connection!!\nTry Again!", "error");
 				}
 			});
 		});

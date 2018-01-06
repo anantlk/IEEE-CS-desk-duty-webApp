@@ -24,19 +24,19 @@ headers = {
 
 def login_user(regno, password):
     try:
-        if(regno[:2] == "16"):
+	print("Logging In..")
+	if(regno[:2] == "16"):
             if(interact_database.check_database(regno, "16") == 0):
                 return 2
-
-        if(regno[:2] == "17"):
-            if(interact_database.check_database(regno, "17") == 0):
-                return 2
+	    if(regno[:2] == "17"):
+		if(interact_database.check_database(regno, "17") == 0):
+                    return 2
 
         main_page = requests.get(
             'https://vtopbeta.vit.ac.in/vtop/',
                 headers=headers,
                 verify=False)
-
+        print(main_page.text)
         # session_cookie
         session_cookie = main_page.cookies['JSESSIONID']
         session_cookie = 'JSESSIONID=' + session_cookie
@@ -52,9 +52,11 @@ def login_user(regno, password):
 
         # user login
         login_data = {
-            'uname': regno,
-                'passwd': password,
-                'captchaCheck': captcha_check}
+        'uname': regno,
+        'passwd': password,
+        'captchaCheck': captcha_check}
+        print(regno)
+        print(password)
 
         login = requests.post(
             'https://vtopbeta.vit.ac.in/vtop/processLogin',
@@ -70,6 +72,7 @@ def login_user(regno, password):
 
 
 def timetable_scrape():
+    print("Scraping Table...")
     timetable = requests.post(
         'https://vtopbeta.vit.ac.in/vtop/processViewTimeTable',
         headers=headers,
@@ -110,6 +113,8 @@ def timetable_scrape():
 
 def get_timetable(user, password):
     login_result = login_user(user, password)
+    print("login_result:"),
+    print(login_result)    
     if login_result == 1:
         return timetable_scrape()
     else:

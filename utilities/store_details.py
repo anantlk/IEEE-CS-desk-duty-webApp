@@ -35,4 +35,4 @@ def store_time_table(timetable, regno):
 		schd["day_routine"]=collections.OrderedDict()
 		for pos_day_schedule in range(len(timetable[i])):
 			schd["day_routine"][str(pos_day_schedule + 1)] = str(timetable[i][pos_day_schedule])
-	interact_database.update(day,schd)
+		interact_database.update(day,schd)

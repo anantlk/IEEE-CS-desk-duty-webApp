@@ -26,14 +26,15 @@ def register():
     mobile = request.form["mobile"]
     branch = request.form["branch"]
     fetched_tt = timetable.get_timetable(reg_no, password)
+    print(fetched_tt)
     if fetched_tt == 2:
-        return 2
+        return "exists"
     elif fetched_tt == 0:
-        return 0
+        return "Incorrect"
     else:
         store_details.store(reg_no, mobile, email, branch)
         store_details.store_time_table(fetched_tt, reg_no)
-        return 1
+        return "success"
 
 if __name__ == "__main__":
     app.run()
