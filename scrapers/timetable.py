@@ -28,45 +28,44 @@ def login_user(regno, password):
 	if(regno[:2] == "16"):
             if(interact_database.check_database(regno, "16") == 0):
                 return 2
-	    if(regno[:2] == "17"):
+	if(regno[:2] == "17"):
 		if(interact_database.check_database(regno, "17") == 0):
-                    return 2
+				return 2
 
-        main_page = requests.get(
-            'https://vtopbeta.vit.ac.in/vtop/',
-                headers=headers,
-                verify=False)
-        print(main_page.text)
-        # session_cookie
-        session_cookie = main_page.cookies['JSESSIONID']
-        session_cookie = 'JSESSIONID=' + session_cookie
-        headers.update({'cookie': session_cookie})
+	main_page = requests.get(
+		'https://vtopbeta.vit.ac.in/vtop/',
+			headers=headers,
+			verify=False)
+	print(main_page.text)
+	# session_cookie
+	session_cookie = main_page.cookies['JSESSIONID']
+	session_cookie = 'JSESSIONID=' + session_cookie
+	headers.update({'cookie': session_cookie})
 
-        # captcha solving
-        root = BeautifulSoup(main_page.text, "html.parser")
-        img_data = root.find_all("img")[1][
-            "src"].strip("data:image/png;base64,")
+	# captcha solving
+	root = BeautifulSoup(main_page.text, "html.parser")
+	img_data = root.find_all("img")[1][
+		"src"].strip("data:image/png;base64,")
 
-        img = Image.open(BytesIO(base64.b64decode(img_data)))
-        captcha_check = CaptchaParse(img)
+	img = Image.open(BytesIO(base64.b64decode(img_data)))
+	captcha_check = CaptchaParse(img)
 
-        # user login
-        login_data = {
-        'uname': regno,
-        'passwd': password,
-        'captchaCheck': captcha_check}
-        print(regno)
-        print(password)
+	# user login
+	login_data = {
+	'uname': regno,
+	'passwd': password,
+	'captchaCheck': captcha_check}
 
-        login = requests.post(
-            'https://vtopbeta.vit.ac.in/vtop/processLogin',
-                headers=headers,
-                data=login_data,
-                verify=False)
-        login_response = BeautifulSoup(login.text, "html.parser")
-        if 'Invalid Username/Password, Please try again' in login_response.text:
-            return 0
-        return 1
+	login = requests.post(
+		'https://vtopbeta.vit.ac.in/vtop/processLogin',
+			headers=headers,
+			data=login_data,
+			verify=False)
+	login_response = BeautifulSoup(login.text, "html.parser")
+	if 'Invalid Username/Password, Please try again' in login_response.text:
+		del headers['cookie']
+		return 0
+	return 1
     except:
         return 0
 
@@ -109,7 +108,9 @@ def timetable_scrape():
             else:
                 final_table[i].append(thry)
     #logout
-    llogout = requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify = False)ogout = requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify = False)
+    logout = requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify = False)
+    del headers['cookie']
+    print(logout.text)
     return [i for i in final_table if i]
 
 
