@@ -1,26 +1,23 @@
 import collections
 import re
 import interact_database
+import sys
+import os
 
+sys.path.insert(0,os.path.join(os.getcwd(),'models'));
+
+import schema
 days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 
 # storing details of the student in the database
 
 
 def store(regno, mobile, email, branch):
-    details = {
-        "regno": regno,
-        "mobile": mobile,
-        "email": email,
-        "branch": branch
-    }
-    if(re.match("16[a-zA-Z]{3}[0-9]{4}", regno)):  # for 2016 batch students
-        if (interact_database.check_database(regno,"16")):
+	details=schema.user(regno,mobile,email,branch)
+	if(re.match("16[a-zA-Z]{3}[0-9]{4}", regno)):  # for 2016 batch students
+		if (interact_database.check_database(regno,"16")):
 			interact_database.insert(details,"16")
-
-
-			
-    if(re.match("17[a-zA-Z]{3}[0-9]{4}", regno)):  # for 2017 batch students
+	if(re.match("17[a-zA-Z]{3}[0-9]{4}", regno)):  # for 2017 batch students
 		if (interact_database.check_database(regno,"17")):
 			interact_database.insert(details,"17")
 			
@@ -28,6 +25,7 @@ def store(regno, mobile, email, branch):
 
 
 def store_time_table(timetable, regno):
+	schema.create_time_table_schema(days)
 	schd = collections.OrderedDict()
 	for day in days:
 		i = days.index(day)

@@ -16,6 +16,8 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<style>
 		body {
+			margin:0px;
+			padding:0px;
 			overflow-y: auto;
 			background-color: #122122;
 			background-size: cover;
@@ -35,16 +37,50 @@
 		input {
 			color: #ccc;
 		}
+		.overlay
+		{
+			top:0px;
+			display: none;
+			background-color:black;
+			opacity:0.4;
+			position:fixed;
+			height:100vh;
+			width:100vw;
+			z-index:10;
+		}
+		.loading
+		{
+			width:100%;
+			display: none;
+			text-align:center;
+			position:fixed;
+			z-index:15;
+		}
+		#gif
+		{
+			background-color:#efefef;
+		}
 	</style>
 </head>
 
-<body class="container">
+<body>
+<!-- 	<div class="overlay">
+		</div>
+		<div class="loading" class="row">
+			<div class="col s6 m4 offset-s3 offset-m4" id="gif">
+				<div class="loader col s4">
+				</div>
+				<div class="text col s8">
+					<p id="loading">Loading...</p>
+					<p id="fetching">Fetching data...</p>
+				</div>
+			</div>
+		</div> -->
 	<div class="row" style="text-align:center;">
 		<img src="/static/images/CS-logo.png" />
 	</div>
-	</div>
 	<div class="row">
-		<form class="col s12" name="register">
+		<form class="col s10 offset-s1" name="register">
 			<div class="row col s10 m6 offset-s1 offset-m3">
 				<div class="input-field col s12">
 					<i class="large material-icons prefix">account_circle</i>
@@ -105,6 +141,8 @@
 					swal("OOPS", "Error in Connection!!\nTry Again!", "error");
 				}
 			});
+			// $(".overlay").show();
+			// $(".loading").show();
 		});
 	});
 </script>
