@@ -108,6 +108,8 @@ def timetable_scrape():
                 final_table[i].append(lab)
             else:
                 final_table[i].append(thry)
+    #logout
+    llogout = requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify = False)ogout = requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify = False)
     return [i for i in final_table if i]
 
 
@@ -118,4 +120,5 @@ def get_timetable(user, password):
     if login_result == 1:
         return timetable_scrape()
     else:
+	logout = requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify = False)
         return login_result
