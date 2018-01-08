@@ -22,9 +22,9 @@ def register():
     print("Got Request")
     reg_no = request.form["regno"]
     password = request.form["password"]
+    name = request.form["name"]
     email = request.form["email"]
     mobile = request.form["mobile"]
-    branch = request.form["branch"]
     fetched_tt = timetable.get_timetable(reg_no, password)
     print(fetched_tt)
     if fetched_tt == 2:
@@ -32,7 +32,7 @@ def register():
     elif fetched_tt == 0:
         return "Incorrect"
     else:
-        store_details.store(reg_no, mobile, email, branch)
+        store_details.store(reg_no, name, email,mobile)
         store_details.store_time_table(fetched_tt, reg_no)
         return "success"
 

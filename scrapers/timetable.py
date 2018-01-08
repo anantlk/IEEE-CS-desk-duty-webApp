@@ -36,7 +36,7 @@ def login_user(regno, password):
 		'https://vtopbeta.vit.ac.in/vtop/',
 			headers=headers,
 			verify=False)
-	print(main_page.text)
+	print(main_page.text+"\n\n\n\n\n\n")
 	# session_cookie
 	session_cookie = main_page.cookies['JSESSIONID']
 	session_cookie = 'JSESSIONID=' + session_cookie
@@ -62,12 +62,17 @@ def login_user(regno, password):
 			data=login_data,
 			verify=False)
 	login_response = BeautifulSoup(login.text, "html.parser")
-	if 'Invalid Username/Password, Please try again' in login_response.text:
+	print("abc")
+	print(login_response.text)
+	if 'Invalid Username/Password, Please try again'  in login_response.text:
+		print("hello")
 		del headers['cookie']
 		return 0
 	return 1
     except:
-        return 0
+		print("inexception")
+		del headers['cookie']
+		return 0
 
 
 def timetable_scrape():

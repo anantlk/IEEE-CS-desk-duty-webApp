@@ -6,12 +6,12 @@ sys.path.insert(0,os.path.join(os.getcwd(),'utilities'));
 import interact_database
 
 table=[]
-def user(regno,mobile,email,branch):
+def user(regno,name,email,mobile):
 	details = {
         "regno": regno,
-        "mobile": mobile,
+        "name": name,
         "email": email,
-        "branch": branch
+        "mobile": mobile
         }
         return details
  

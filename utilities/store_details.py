@@ -12,8 +12,8 @@ days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 # storing details of the student in the database
 
 
-def store(regno, mobile, email, branch):
-	details=schema.user(regno,mobile,email,branch)
+def store(regno, name, email, mobile):
+	details=schema.user(regno,name,email,mobile)
 	if(re.match("16[a-zA-Z]{3}[0-9]{4}", regno)):  # for 2016 batch students
 		if (interact_database.check_database(regno,"16")):
 			interact_database.insert(details,"16")

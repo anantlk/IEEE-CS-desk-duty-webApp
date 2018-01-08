@@ -1,0 +1,73 @@
+		body {
+			margin:0px;
+			padding:0px;
+			overflow-y: auto;
+			background-color: #122122;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+		}
+
+		i {
+			color: white;
+		}
+
+		img {
+			width: 220px;
+			padding: 20px 0px 5px 0px;
+		}
+
+		input {
+			color: #ccc;
+		}
+		.overlay
+		{
+			display: none;
+			top:0px;
+			background-color:black;
+			opacity:0.4;
+			position:fixed;
+			height:100vh;
+			width:100vw;
+			z-index:10;
+		}
+		.loading
+		{
+			display: none;
+			position: relative;
+			top:40%;
+			font-size: 18px;
+			width:100%;
+			text-align:center;
+			position:fixed;
+			z-index:15;
+		}
+		#gif
+		{
+			padding:10px;
+			background-color:#efefef;
+		}
+		#fetching
+		{
+			display: block;
+		}
+		#loading
+		{
+			display: none;
+		}
+		.loader
+		{
+			height:53px;
+			border-radius:100%;
+			border-top:1px solid green;
+			animation:spin 1s infinite linear;
+		}
+		@keyframes spin 
+		{
+			0%{
+				transform: rotate(0deg);
+			}
+			100%{
+				transform: rotate(360deg);
+			}
+		}

@@ -10,69 +10,21 @@
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link rel="stylesheet" href="/static/stylesheets/style.css">
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<style>
-		body {
-			margin:0px;
-			padding:0px;
-			overflow-y: auto;
-			background-color: #122122;
-			background-size: cover;
-			background-position: center;
-			background-attachment: fixed;
-		}
-
-		i {
-			color: white;
-		}
-
-		img {
-			width: 220px;
-			padding: 20px 0px 5px 0px;
-		}
-
-		input {
-			color: #ccc;
-		}
-		.overlay
-		{
-			top:0px;
-			display: none;
-			background-color:black;
-			opacity:0.4;
-			position:fixed;
-			height:100vh;
-			width:100vw;
-			z-index:10;
-		}
-		.loading
-		{
-			width:100%;
-			display: none;
-			text-align:center;
-			position:fixed;
-			z-index:15;
-		}
-		#gif
-		{
-			background-color:#efefef;
-		}
-	</style>
 </head>
 
 <body>	
 	<div class="overlay">
 		</div>
-		<div class="loading" class="row">
-			<div class="col s6 m4 offset-s3 offset-m4" id="gif">
-				<div class="loader col s4">
+		<div class="loading row">
+			<div class="col s8 m4 l2 offset-s2 offset-m4 offset-l5" id="gif">
+				<div class="loader col s3">
 				</div>
-				<div class="text col s8">
-					<p id="loading">Loading...</p>
+				<div class="text col s9">
 					<p id="fetching">Fetching data...</p>
 				</div>
 			</div>
@@ -94,7 +46,11 @@
 					<label for="password">Password</label>
 					<input id="password" name="password" type="password" class="validate" required />
 				</div>
-
+				<div class="input-field col s12">
+					<i class="material-icons prefix">face</i>
+					<label for="name">Name</label>
+					<input id="name" name="name" type="text" class="validate" required />
+				</div>
 				<div class="input-field col s12">
 					<i class="material-icons prefix">email</i>
 					<label for="email">Email</label>
@@ -106,16 +62,12 @@
 					<label for="email">Mobile No</label>
 					<input id="mobile" name="mobile" type="text" pattern="[0-9]{10}" class="validate" required/>
 				</div>
-
 				<div class="input-field col s12">
-					<i class="material-icons prefix">book</i>
-					<label for="branch">Branch</label>
-					<input id="branch" name="branch" type="text" class="validate" required />
-				</div>
-				<div class="input-field col s12">
-					<input type="submit" class="btn waves-effect waves-light col offset-s3 offset-m5">
-						<!-- <i class="material-icons right">send</i> -->
+				<div class="btn waves-effect waves-light col offset-s3 offset-m5">
+					<input type="submit">
 					</input>
+					<i class="material-icons right">send</i>
+				</div>
 				</div>
 			</div>
 		</form>
@@ -124,11 +76,15 @@
 <script>
 	$(document).ready(function () {
 		$("form").submit(function(){
+				$(".overlay").show();
+				$(".loading").show();
 				$.ajax({
 				url: "/register",
 				data: $('form').serialize(),
 				type: "POST",
 				success: function (msg) {
+					$(".overlay").hide();
+					$(".loading").hide();
 					console.log(msg + "I am in success")
 					if (msg == "success")
 						swal("Success", "Succesfully Registered!", "success");
@@ -139,41 +95,14 @@
 
 				},
 				error: function (msg) {
+					$(".overlay").hide();
+					$(".loading").hide();
 					console.log("I am in error")
 					swal("OOPS", "Error in Connection!!Try Again!", "error");
 				}
-			});			
+			});		
             return false;
             });
-		// $("button").click(function(){
-		// 	$("form").on("success.form.fv",function (evt) {
-		// 	evt.preventDefault();
-		// 	console.log("entered");
-
-
-		// 	// $.ajax({
-		// 	// 	url: "/register",
-		// 	// 	data: $('form').serialize(),
-		// 	// 	type: "POST",
-		// 	// 	success: function (msg) {
-		// 	// 		console.log(msg + "I am in success")
-		// 	// 		if (msg == "success")
-		// 	// 			swal("Success", "Succesfully Registered!", "success");
-		// 	// 		if (msg == "exists")
-		// 	// 			swal("OOPS", "User Already Registered!", "error");
-		// 	// 		if (msg == "Incorrect")
-		// 	// 			swal("OOPS", "Incorrect Credentials!", "error");
-
-		// 	// 	},
-		// 	// 	error: function (msg) {
-		// 	// 		console.log("I am in error")
-		// 	// 		swal("OOPS", "Error in Connection!!Try Again!", "error");
-		// 	// 	}
-		// 	// });
-		// 	// $(".overlay").show();
-		// 	// $(".loading").show();
-		// });
-		// });
 	});
 </script>
 
