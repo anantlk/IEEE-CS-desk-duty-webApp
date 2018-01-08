@@ -11,7 +11,8 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<style>
@@ -63,8 +64,8 @@
 	</style>
 </head>
 
-<body>
-<!-- 	<div class="overlay">
+<body>	
+	<div class="overlay">
 		</div>
 		<div class="loading" class="row">
 			<div class="col s6 m4 offset-s3 offset-m4" id="gif">
@@ -75,7 +76,7 @@
 					<p id="fetching">Fetching data...</p>
 				</div>
 			</div>
-		</div> -->
+		</div>
 	<div class="row" style="text-align:center;">
 		<img src="/static/images/CS-logo.png" />
 	</div>
@@ -84,8 +85,8 @@
 			<div class="row col s10 m6 offset-s1 offset-m3">
 				<div class="input-field col s12">
 					<i class="large material-icons prefix">account_circle</i>
-					<label for="regno">Username</label>
-					<input id="regno" name="regno" type="text" class="validate" required />
+					<label for="regno">Registration No</label>
+					<input  id="regno" name="regno" type="text" pattern="(16|17)([A-Za-z]){3}([0-9]){4}" class="validate"/ required>
 				</div>
 
 				<div class="input-field col s12">
@@ -112,17 +113,18 @@
 					<input id="branch" name="branch" type="text" class="validate" required />
 				</div>
 				<div class="input-field col s12">
-					<button class="btn waves-effect waves-light col offset-s3 offset-m5" type="button" name="action">Submit
-						<i class="material-icons right">send</i>
-					</button>
+					<input type="submit" class="btn waves-effect waves-light col offset-s3 offset-m5">
+						<!-- <i class="material-icons right">send</i> -->
+					</input>
 				</div>
 			</div>
 		</form>
+	</div>
 </body>
 <script>
 	$(document).ready(function () {
-		$("button").click(function () {
-			$.ajax({
+		$("form").submit(function(){
+				$.ajax({
 				url: "/register",
 				data: $('form').serialize(),
 				type: "POST",
@@ -138,12 +140,40 @@
 				},
 				error: function (msg) {
 					console.log("I am in error")
-					swal("OOPS", "Error in Connection!!\nTry Again!", "error");
+					swal("OOPS", "Error in Connection!!Try Again!", "error");
 				}
-			});
-			// $(".overlay").show();
-			// $(".loading").show();
-		});
+			});			
+            return false;
+            });
+		// $("button").click(function(){
+		// 	$("form").on("success.form.fv",function (evt) {
+		// 	evt.preventDefault();
+		// 	console.log("entered");
+
+
+		// 	// $.ajax({
+		// 	// 	url: "/register",
+		// 	// 	data: $('form').serialize(),
+		// 	// 	type: "POST",
+		// 	// 	success: function (msg) {
+		// 	// 		console.log(msg + "I am in success")
+		// 	// 		if (msg == "success")
+		// 	// 			swal("Success", "Succesfully Registered!", "success");
+		// 	// 		if (msg == "exists")
+		// 	// 			swal("OOPS", "User Already Registered!", "error");
+		// 	// 		if (msg == "Incorrect")
+		// 	// 			swal("OOPS", "Incorrect Credentials!", "error");
+
+		// 	// 	},
+		// 	// 	error: function (msg) {
+		// 	// 		console.log("I am in error")
+		// 	// 		swal("OOPS", "Error in Connection!!Try Again!", "error");
+		// 	// 	}
+		// 	// });
+		// 	// $(".overlay").show();
+		// 	// $(".loading").show();
+		// });
+		// });
 	});
 </script>
 
