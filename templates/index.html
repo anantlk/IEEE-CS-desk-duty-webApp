@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-	<link rel="stylesheet" href="../static/stylesheets/style.css">
+	<link rel="stylesheet" href="/static/stylesheets/style.css">
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -22,15 +22,16 @@
 		</div>
 		<div class="loading row">
 			<div class="col s8 m4 l2 offset-s2 offset-m4 offset-l5" id="gif">
-				<div class="loader col s3">
+				<div class="col s4">
+					<img src="/static/images/Spinner.gif" id="loader" width="100%"></img>
 				</div>
-				<div class="text col s9">
+				<div class="text col s8">
 					<p id="fetching">Fetching data...</p>
 				</div>
 			</div>
 		</div>
 	<div class="row" style="text-align:center;">
-		<img src="/static/images/CS-logo.png" />
+		<img id="logo" src="/static/images/CS-logo.png" />
 	</div>
 	<div class="row">
 		<form class="col s10 offset-s1" name="register">
@@ -63,7 +64,7 @@
 					<input id="mobile" name="mobile" type="text" pattern="[0-9]{10}" class="validate" required/>
 				</div>
 				<div class="input-field col s12">
-				<div class="btn waves-effect waves-light col offset-s3 offset-m5">
+				<div class="btn waves-effect waves-light col offset-s4 offset-m5">
 					<input type="submit">
 					</input>
 					<i class="material-icons right">send</i>
