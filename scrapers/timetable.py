@@ -55,22 +55,24 @@ def login_user(regno, password):
 	'uname': regno,
 	'passwd': password,
 	'captchaCheck': captcha_check}
-
+	
 	login = requests.post(
 		'https://vtopbeta.vit.ac.in/vtop/processLogin',
 			headers=headers,
 			data=login_data,
 			verify=False)
 	login_response = BeautifulSoup(login.text, "html.parser")
-	print("abc")
-	print(login_response.text)
-	if 'Invalid Username/Password, Please try again'  in login_response.text:
-		print("hello")
+	
+	print("Login Post request Sent!!\n\n")
+	print(login_response)
+	if ('Invalid Username/Password, Please try again'  in login_response.text or 'User does not exist' in login_response.text):
+		print("Invalid Username/Password ")
 		del headers['cookie']
 		return 0
 	return 1
     except:
-		print("inexception")
+		print("Exception Raised\n\n")
+		print(login.text)
 		del headers['cookie']
 		return 0
 

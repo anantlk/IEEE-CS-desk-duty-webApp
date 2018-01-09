@@ -59,7 +59,7 @@
 		{
 			height:53px;
 			border-radius:100%;
-			border-top:1px solid green;
+			border-top:1px solid #1ef322;
 			animation:spin 1s infinite linear;
 		}
 		@keyframes spin 
@@ -69,5 +69,12 @@
 			}
 			100%{
 				transform: rotate(360deg);
+			}
+		}
+		@media only screen and (max-width:660px)
+		{
+			.loader
+			{
+				height: 49px;
 			}
 		}
