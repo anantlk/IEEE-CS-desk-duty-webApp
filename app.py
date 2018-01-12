@@ -32,7 +32,7 @@ def register():
     elif fetched_tt == 0:
         return "Incorrect"
     else:
-        store_details.store(reg_no, name, email,mobile)
+        store_details.store(reg_no, name, email, mobile)
         store_details.store_time_table(fetched_tt, reg_no)
         return "success"
 
