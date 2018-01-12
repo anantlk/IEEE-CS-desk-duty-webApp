@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(os.getcwd(), 'utilities'))
 from captchaparser import CaptchaParse
 import interact_database
 
-semSubId = 'VL2017185'
+semSubId = os.environ.get("SEMESTER_ID")
 
 headers = {
     'user-agent': 'Mozilla/5.0 (X11; Linux x86_64)\
