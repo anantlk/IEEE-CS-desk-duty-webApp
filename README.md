@@ -1,1 +1,1 @@
-WebApp for desk duty generation for IEEE CS VIT students.
+WebApp for free slots for IEEE CS VIT students.
