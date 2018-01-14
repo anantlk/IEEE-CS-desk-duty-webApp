@@ -1,21 +1,18 @@
-import requests
+
+import base64
 import os
-import re
+from io import BytesIO
+
+import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-from io import BytesIO
-import base64
-from pprint import pprint
 
-import sys
-sys.path.insert(0, os.path.join(os.getcwd(), 'utilities'))
+from utilities import interact_database
+from utilities.captchaparser import solve_captcha
 
-from captchaparser import CaptchaParse
-import interact_database
+SEMESTER_ID = os.environ.get("SEMESTER_ID")
 
-semSubId = os.environ.get("SEMESTER_ID")
-
-headers = {
+HEADERS = {
     'user-agent': 'Mozilla/5.0 (X11; Linux x86_64)\
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 \
         Safari/537.36'
@@ -24,23 +21,21 @@ headers = {
 
 def login_user(regno, password):
     try:
-        print("Logging In..")
-        if(regno[:2] == "16"):
-            if(interact_database.check_database(regno, "16") == 0):
+        if regno[:2] == "16":
+            if interact_database.check_database(regno, "16") == 0:
                 return 2
         if(regno[:2] == "17"):
-            if(interact_database.check_database(regno, "17") == 0):
+            if interact_database.check_database(regno, "17") == 0:
                 return 2
 
         main_page = requests.get(
             'https://vtopbeta.vit.ac.in/vtop/',
-                        headers=headers,
+                        headers=HEADERS,
                         verify=False)
-        print(main_page.text + "\n\n\n\n\n\n")
         # session_cookie
         session_cookie = main_page.cookies['JSESSIONID']
         session_cookie = 'JSESSIONID=' + session_cookie
-        headers.update({'cookie': session_cookie})
+        HEADERS.update({'cookie': session_cookie})
 
         # captcha solving
         root = BeautifulSoup(main_page.text, "html.parser")
@@ -48,7 +43,7 @@ def login_user(regno, password):
             "src"].strip("data:image/png;base64,")
 
         img = Image.open(BytesIO(base64.b64decode(img_data)))
-        captcha_check = CaptchaParse(img)
+        captcha_check = solve_captcha(img)
 
         # user login
         login_data = {
@@ -58,31 +53,25 @@ def login_user(regno, password):
 
         login = requests.post(
             'https://vtopbeta.vit.ac.in/vtop/processLogin',
-                        headers=headers,
+                        headers=HEADERS,
                         data=login_data,
                         verify=False)
         login_response = BeautifulSoup(login.text, "html.parser")
 
-        print("Login Post request Sent!!\n\n")
-        print(login_response)
         if ('Invalid Username/Password, Please try again' in login_response.text or 'User does not exist' in login_response.text):
-            print("Invalid Username/Password ")
-            del headers['cookie']
+            del HEADERS['cookie']
             return 0
         return 1
     except:
-        print("Exception Raised\n\n")
-        print(login.text)
-        del headers['cookie']
+        del HEADERS['cookie']
         return 0
 
 
 def timetable_scrape():
-    print("Scraping Table...")
     timetable = requests.post(
         'https://vtopbeta.vit.ac.in/vtop/processViewTimeTable',
-        headers=headers,
-        data={'semesterSubId': semSubId},
+        headers=HEADERS,
+        data={'semesterSubId': SEMESTER_ID},
         verify=False)
     root = BeautifulSoup(timetable.text, "html.parser")
     table = root.find_all(class_="table table-responsive table-striped")[0]
@@ -115,20 +104,15 @@ def timetable_scrape():
             else:
                 final_table[i].append(thry)
     # logout
-    logout = requests.post(
-        'https://vtopbeta.vit.ac.in/vtop/processLogout', verify=False)
-    del headers['cookie']
-    print(logout.text)
+    requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify=False)
+    del HEADERS['cookie']
     return [i for i in final_table if i]
 
 
 def get_timetable(user, password):
     login_result = login_user(user, password)
-    print("login_result:"),
-    print(login_result)
     if login_result == 1:
         return timetable_scrape()
     else:
-        logout = requests.post(
-            'https://vtopbeta.vit.ac.in/vtop/processLogout', verify=False)
+        requests.post('https://vtopbeta.vit.ac.in/vtop/processLogout', verify=False)
         return login_result

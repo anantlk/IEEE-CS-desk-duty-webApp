@@ -1,12 +1,5 @@
-import sys
-import os
 
-sys.path.insert(0, os.path.join(os.getcwd(), 'utilities'))
-
-import interact_database
-
-table = []
-
+from utilities import interact_database
 
 def user(regno, name, email, mobile):
     details = {
@@ -19,6 +12,5 @@ def user(regno, name, email, mobile):
 
 
 def create_time_table_schema(days):
-    for day in days:
-        table.append({"day": day, "schedule": []})
+    table = [{"day": day, "schedule": []} for day in days]
     interact_database.create_collection(table)

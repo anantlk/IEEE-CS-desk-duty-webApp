@@ -1,19 +1,9 @@
 
+from data.bitmaps import bitmap
 
-# author - Priyansh Jain
-# date - 24/09/2017
+CHARACTERS = "abcdefghijklmnpqrstuvwxyz123456789"
 
-
-from PIL import Image
-import sys
-import os
-sys.path.insert(0, os.path.join(os.getcwd(), 'data'))
-from bitmaps import bitmap
-
-letters = "abcdefghijklmnpqrstuvwxyz123456789"
-
-
-def CaptchaParse(img):
+def solve_captcha(img):
     captcha = ""
     img = img.convert('L')
     pix = img.load()
@@ -26,10 +16,10 @@ def CaptchaParse(img):
             if pix[x, y] != 255 and pix[x, y] != 0:
                 pix[x, y] = 255
     for j in range(30, 181, 30):
-        ch = img.crop((j - 30, 12, j, 44))
-        pix1 = ch.load()
+        cropped_img = img.crop((j - 30, 12, j, 44))
+        pix1 = cropped_img.load()
         matches = {}
-        for char in letters:
+        for char in CHARACTERS:
             match = 0
             black = 0
             pix2 = bitmap[char]
@@ -44,8 +34,5 @@ def CaptchaParse(img):
         try:
             captcha += matches[max(matches.keys())]
         except ValueError:
-            print("failed captcha")
             captcha += "0"
     return captcha
-# img=Image.open("captcha.png")
-# print CaptchaParse(img)

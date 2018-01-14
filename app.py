@@ -1,16 +1,10 @@
-import sys
-import os
 
-import flask
 from flask import Flask, render_template, request
 
+from scrapers import timetable
+from utilities import store_details
+
 app = Flask(__name__)
-
-sys.path.insert(0, os.path.join(os.getcwd(), 'scrapers'))
-sys.path.insert(0, os.path.join(os.getcwd(), 'utilities'))
-import timetable
-import store_details
-
 
 @app.route("/")
 def main():
@@ -19,14 +13,12 @@ def main():
 
 @app.route("/register", methods=['POST'])
 def register():
-    print("Got Request")
     reg_no = request.form["regno"]
     password = request.form["password"]
     name = request.form["name"]
     email = request.form["email"]
     mobile = request.form["mobile"]
     fetched_tt = timetable.get_timetable(reg_no, password)
-    print(fetched_tt)
     if fetched_tt == 2:
         return "exists"
     elif fetched_tt == 0:
