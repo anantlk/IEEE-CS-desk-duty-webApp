@@ -5,7 +5,7 @@ import re
 import utilities.interact_database
 from models import schema
 
-DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
 # storing details of the student in the database
 
@@ -23,13 +23,10 @@ def store(regno, name, email, mobile):
 
 
 def store_time_table(timetable, regno):
-    schema.create_time_table_schema(DAYS)
-    schd = collections.OrderedDict()
-    for day in DAYS:
-        i = DAYS.index(day)
+    schema.create_time_table_schema(timetable.keys())
+    schd = {}
+    for day in timetable.keys():
         schd["regno"] = regno
-        schd["day_routine"] = collections.OrderedDict()
-        for pos_day_schedule in range(len(timetable[i])):
-            schd["day_routine"][str(pos_day_schedule + 1)] = str(
-                timetable[i][pos_day_schedule])
+        schd["day_routine"] = timetable[day]
+        print("day:", day, "schd", schd)
         utilities.interact_database.update(day, schd)

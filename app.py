@@ -6,6 +6,7 @@ from utilities import store_details
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def main():
     return render_template('index.html')
@@ -13,6 +14,7 @@ def main():
 
 @app.route("/register", methods=['POST'])
 def register():
+    print("priyansh mc")
     reg_no = request.form["regno"]
     password = request.form["password"]
     name = request.form["name"]
@@ -27,6 +29,7 @@ def register():
         store_details.store(reg_no, name, email, mobile)
         store_details.store_time_table(fetched_tt, reg_no)
         return "success"
+
 
 if __name__ == "__main__":
     app.run()
