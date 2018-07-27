@@ -1,0 +1,100 @@
+[{
+	"_id": {
+		"$oid": "5b596b5cd72a550009eab43f"
+	},
+	"name": "Priyansh Jain",
+	"email": "priyansh.jain0246@gmail.com",
+	"mobile": "9789096037",
+	"regno": "16BCE0979"
+},
+{
+	"_id": {
+		"$oid": "5b596bccd72a550009eab445"
+	},
+	"name": "SRIJAN MALHOTRA",
+	"email": "srijan.malhotra@yahoo.in",
+	"mobile": "9787111720",
+	"regno": "16BCE0601"
+},
+{
+	"_id": {
+		"$oid": "5b596cf3d72a550009eab446"
+	},
+	"name": "Harshita",
+	"email": "harshita.sahni2016@vitstudent.ac.in",
+	"mobile": "9629058893",
+	"regno": "16BIT0039"
+},
+{
+	"_id": {
+		"$oid": "5b596d94d72a55000a6a55d7"
+	},
+	"name": "Asmita",
+	"email": "asmita.chotani2016@vitstudent.ac.in",
+	"mobile": "7530002422",
+	"regno": "16BCE0499"
+},
+{
+	"_id": {
+		"$oid": "5b596dd1d72a55000a6a55d9"
+	},
+	"name": "Mehul Singhal",
+	"email": "mehul-singhal@outlook.com",
+	"mobile": "8279280773",
+	"regno": "16BCE0823"
+},
+{
+	"_id": {
+		"$oid": "5b596e2bd72a55000a6a55da"
+	},
+	"name": "Ananya",
+	"email": "ananyarattan.khurana2016@vitstudent.ac.in",
+	"mobile": "9810306208",
+	"regno": "16BIT0297"
+},
+{
+	"_id": {
+		"$oid": "5b59701ad72a55000a6a55db"
+	},
+	"name": "Chaitanya Bhojwani",
+	"email": "chaitanya.bhojwani1012@gmail.com",
+	"mobile": "9460111227",
+	"regno": "16BCE0082"
+},
+{
+	"_id": {
+		"$oid": "5b597085d72a550009eab448"
+	},
+	"name": "Allan Bastian",
+	"email": "allan.bastian9.ab@gmail.com",
+	"mobile": "9886676958",
+	"regno": "16BIT0201"
+},
+{
+	"_id": {
+		"$oid": "5b597129d72a550009eab44a"
+	},
+	"name": "Indresh arora",
+	"email": "indresh.arora2016@vitstudent.ac.in",
+	"mobile": "8290642601",
+	"regno": "16BCE0288"
+},
+{
+	"_id": {
+		"$oid": "5b598580c1f2e000096e9b4e"
+	},
+	"name": "Shubhadeep Das",
+	"mobile": "9629088281",
+	"regno": "16BIT0401",
+	"email": "shubhadeep.das2016@vitstudent.ac.in"
+},
+{
+	"_id": {
+		"$oid": "5b598afdc1f2e0000a6f95bb"
+	},
+	"name": "Garima ",
+	"mobile": "7530003550",
+	"regno": "16BCE2193",
+	"email": "sondhi.garima@gmail.com"
+}]
+

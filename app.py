@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request
 
 from scrapers import timetable
-from utilities import store_details
+from utilities import store_details, get_free_time
 
 app = Flask(__name__)
 
@@ -14,7 +14,6 @@ def main():
 
 @app.route("/register", methods=['POST'])
 def register():
-    print("priyansh mc")
     reg_no = request.form["regno"]
     password = request.form["password"]
     name = request.form["name"]
@@ -29,6 +28,14 @@ def register():
         store_details.store(reg_no, name, email, mobile)
         store_details.store_time_table(fetched_tt, reg_no)
         return "success"
+
+
+@app.route("/get_free_members", methods=['GET'])
+def get_free_members():
+    # print(request.args['day'])
+    free_members = get_free_time.get_free_people_by_day_time_year(
+        request.args['day'], request.args['time'], request.args['year'])
+    return ''.join(mem + "," for mem in free_members)
 
 
 if __name__ == "__main__":
