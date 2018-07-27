@@ -32,14 +32,17 @@ def get_name_from_regno(regno):
     """
     returns name for a given registration number
     """
-    year = regno[:2]
-    if year == "16":
-        all_members = stud_det_16
-    else:
-        all_members = stud_det_17
-    for member in all_members:
-        if regno == member["regno"]:
-            return member["name"]
+    try:
+        year = regno[:2]
+        if year == "16":
+            all_members = stud_det_16
+        else:
+            all_members = stud_det_17
+        for member in all_members:
+            if regno == member["regno"]:
+                return member["name"]
+    except:
+        return ["Check input pls"]
 
 
 def get_free_people_by_day_time_year(req_day, req_time, year):
@@ -51,18 +54,20 @@ def get_free_people_by_day_time_year(req_day, req_time, year):
     accepted time: [8,9,10,11,12,2,3,4,5,6]
     accepted year: [16, 17]
     """
-    print("came heres")
-    db_time = time_map[req_time]
-    free_members = []
-    for item in records:
-        day = item["day"]
-        people = item["schedule"]
-        if day == req_day:
-            for person in people:
-                if db_time not in person["day_routine"]:
-                    free_members.append(person["regno"])
-    return [get_name_from_regno(member)
-            for member in free_members if member[:2] == year]
+    try:
+        db_time = time_map[req_time]
+        free_members = []
+        for item in records:
+            day = item["day"]
+            people = item["schedule"]
+            if day == req_day:
+                for person in people:
+                    if db_time not in person["day_routine"]:
+                        free_members.append(person["regno"])
+        return [get_name_from_regno(member)
+                for member in free_members if member[:2] == year]
+    except:
+        return ["Check input pls"]
 
 
 if __name__ == '__main__':

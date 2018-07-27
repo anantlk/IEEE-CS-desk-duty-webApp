@@ -10,8 +10,8 @@ from PIL import Image
 from utilities import interact_database
 from utilities.captchaparser import solve_captcha
 
-# SEMESTER_ID = os.environ.get("SEMESTER_ID")
-SEMESTER_ID = "VL2018191"
+SEMESTER_ID = os.environ.get("SEMESTER_ID")
+# SEMESTER_ID = "VL2018191"
 
 HEADERS = {
     'user-agent': 'Mozilla/5.0 (X11; Linux x86_64)\
