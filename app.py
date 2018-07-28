@@ -1,8 +1,10 @@
 
+import subprocess
+
 from flask import Flask, render_template, request
 
 from scrapers import timetable
-from utilities import store_details, get_free_time
+from utilities import get_free_time, store_details
 
 app = Flask(__name__)
 
@@ -32,7 +34,7 @@ def register():
 
 @app.route("/get_free_members", methods=['GET'])
 def get_free_members():
-    # print(request.args['day'])
+    # subprocess.call("scripts/get_db_dump.sh")
     free_members = get_free_time.get_free_people_by_day_time_year(
         request.args['day'], request.args['time'], request.args['year'])
     return ''.join(mem + "," for mem in free_members)

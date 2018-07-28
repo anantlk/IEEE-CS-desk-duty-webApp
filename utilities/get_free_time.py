@@ -1,6 +1,7 @@
 import json
 import os
 from pprint import pprint
+import subprocess
 
 time_map = {
     "8": "1",
@@ -55,6 +56,7 @@ def get_free_people_by_day_time_year(req_day, req_time, year):
     accepted year: [16, 17]
     """
     try:
+
         db_time = time_map[req_time]
         free_members = []
         for item in records:

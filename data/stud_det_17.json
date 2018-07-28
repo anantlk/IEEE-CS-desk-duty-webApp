@@ -213,5 +213,32 @@
 	"mobile": "9405577555",
 	"email": "rajvardhan1999@gmail.com",
 	"name": "RAJVARDHAN DESHMUKH"
+},
+{
+	"_id": {
+		"$oid": "5b5c22a4dbd0d800094e08eb"
+	},
+	"name": "Satkriti Singh ",
+	"email": "satkriti.singh2017@vitstudent.ac.in",
+	"mobile": "9003310066",
+	"regno": "17BCE2348"
+},
+{
+	"_id": {
+		"$oid": "5b5c2645dbd0d800094e08ec"
+	},
+	"name": "Avradeep Gupta",
+	"email": "avradeepgupta@gmail.com",
+	"mobile": "9433481853",
+	"regno": "17BCE0574"
+},
+{
+	"_id": {
+		"$oid": "5b5c2729dbd0d8000af07091"
+	},
+	"name": "Anshuman Saboo",
+	"email": "anshuman@sheltron.com",
+	"mobile": "8088920020",
+	"regno": "17BCE0141"
 }]
 

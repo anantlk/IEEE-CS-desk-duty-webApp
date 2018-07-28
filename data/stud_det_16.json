@@ -96,5 +96,14 @@
 	"mobile": "7530003550",
 	"regno": "16BCE2193",
 	"email": "sondhi.garima@gmail.com"
+},
+{
+	"_id": {
+		"$oid": "5b5c2a11dbd0d8000af07092"
+	},
+	"name": "Rishabh Chanana",
+	"email": "rishabh.chanana2016@vitstudent.ac.in",
+	"mobile": "8816007200",
+	"regno": "16BCE0993"
 }]
 
