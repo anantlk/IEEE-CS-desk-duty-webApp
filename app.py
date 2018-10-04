@@ -14,7 +14,6 @@ def main():
 
 @app.route("/register", methods=['POST'])
 def register():
-    print("priyansh mc")
     reg_no = request.form["regno"]
     password = request.form["password"]
     name = request.form["name"]
