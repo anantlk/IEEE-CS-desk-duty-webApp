@@ -5,18 +5,6 @@ sys.path.insert(0, path)
 from pymongo import MongoClient
 from .generate_duty import generate_desk_duty
 
-# DB_NAME = os.environ.get("DB_NAME")
-# DB_HOST = os.environ.get("DB_HOST")
-# DB_PORT = os.environ.get("DB_PORT")
-# DB_USER = os.environ.get("DB_USER")
-# DB_PASS = os.environ.get("DB_PASS")
-
-DB_NAME = "student_details"
-DB_HOST = "ds153841.mlab.com"
-DB_PORT = 53841
-DB_USER = "ieeecs"
-DB_PASS = "ieeecs@123"
-
 
 # DB_NAME = "student"
 # DB_HOST = "localhost"

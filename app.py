@@ -1,13 +1,13 @@
 
 import subprocess
 import zipfile
-from flask import Flask, render_template, request
+import os
+from flask import Flask, render_template, request,send_file,Response
 from scrapers import timetable
 from utilities import get_free_time, store_details,interact_database
 
 app = Flask(__name__)
-
-
+    
 @app.route("/")
 def main():
     return render_template('index.html')
@@ -43,7 +43,20 @@ def get_desk_duty():
     day = request.args["day"]
     print(day)
     if(interact_database.get_details(day)):
-        return "success"
+        path = os.getcwd();
+        zipf = zipfile.ZipFile('result.zip', 'w', zipfile.ZIP_DEFLATED)
+        for root, dirs, files in os.walk(path + "/table"):
+            print(root);
+            dest_dir = root.replace(os.path.dirname(path), '', 1)
+            for file in files:
+                zipf.write(os.path.join(root, file), arcname=os.path.join(dest_dir, file))
+        zipf.close()
+        return send_file(path + '/result.zip',
+                     mimetype='text/zip',
+                     attachment_filename='result.zip',
+                     as_attachment=True)
+    else:
+        return "Failed"
 
 if __name__ == "__main__":
     app.run()
