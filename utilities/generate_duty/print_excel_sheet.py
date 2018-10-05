@@ -49,7 +49,7 @@ def print_free_slots(free_slots):
 			for free_stud in free_slots[slot+1]:
 				row.append(free_stud.split(" ")[0])
 			print(row)
-			writer.writerow(row)
+			writer.writerow(list(set(row)))
 
 	csvFile.close()
 
