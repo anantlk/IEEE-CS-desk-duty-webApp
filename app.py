@@ -12,6 +12,9 @@ app = Flask(__name__)
 def main():
     return render_template('index.html')
 
+@app.route("/generate_desk_duty")
+def form():
+    return render_template('form.html')
 
 @app.route("/register", methods=['POST'])
 def register():
@@ -54,7 +57,7 @@ def get_desk_duty():
         return send_file(path + '/result.zip',
                      mimetype='text/zip',
                      attachment_filename='result.zip',
-                     as_attachment=True)
+                     as_attachment=True) 
     else:
         return "Failed"
 

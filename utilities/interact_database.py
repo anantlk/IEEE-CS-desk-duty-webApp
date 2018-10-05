@@ -6,11 +6,13 @@ from pymongo import MongoClient
 from .generate_duty import generate_desk_duty
 
 
-# DB_NAME = "student"
-# DB_HOST = "localhost"
-# DB_PORT = 27017
+DB_NAME = os.environ.get("DB_NAME")
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
+DB_USER = os.environ.get("DB_USER")
+DB_PASS = os.environ.get("DB_PASS")
 
-CONNECTION = MongoClient(DB_HOST, DB_PORT)
+CONNECTION = MongoClient(DB_HOST, int(DB_PORT))
 db = CONNECTION[DB_NAME]
 db.authenticate(DB_USER, DB_PASS)
 

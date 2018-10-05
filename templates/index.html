@@ -17,19 +17,19 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
-<body>	
+<body>
 	<div class="overlay">
-		</div>
-		<div class="loading row">
-			<div class="col s8 m4 l2 offset-s2 offset-m4 offset-l5" id="gif">
-				<div class="col s4">
-					<img src="/static/images/Spinner.gif" id="loader" width="100%"></img>
-				</div>
-				<div class="text col s8">
-					<p id="fetching">Fetching data...</p>
-				</div>
+	</div>
+	<div class="loading row">
+		<div class="col s8 m4 l2 offset-s2 offset-m4 offset-l5" id="gif">
+			<div class="col s4">
+				<img src="/static/images/Spinner.gif" id="loader" width="100%"></img>
+			</div>
+			<div class="text col s8">
+				<p id="fetching">Fetching data...</p>
 			</div>
 		</div>
+	</div>
 	<div class="row" style="text-align:center;">
 		<img id="logo" src="/static/images/CS-logo.png" />
 	</div>
@@ -39,7 +39,7 @@
 				<div class="input-field col s12">
 					<i class="large material-icons prefix">account_circle</i>
 					<label for="regno">Registration No</label>
-					<input  id="regno" name="regno" type="text" pattern="(16|17)([A-Za-z]){3}([0-9]){4}" class="validate"/ required>
+					<input id="regno" name="regno" type="text" pattern="(16|17)([A-Za-z]){3}([0-9]){4}" class="validate" / required>
 				</div>
 
 				<div class="input-field col s12">
@@ -64,11 +64,11 @@
 					<input id="mobile" name="mobile" type="text" pattern="[0-9]{10}" class="validate" required/>
 				</div>
 				<div class="input-field col s12">
-				<div class="btn waves-effect waves-light col offset-s4 offset-m5">
-					<input type="submit">
-					</input>
-					<i class="material-icons right">send</i>
-				</div>
+					<div class="btn waves-effect waves-light col offset-s4 offset-m5">
+						<input type="submit">
+						</input>
+						<i class="material-icons right">send</i>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -76,10 +76,10 @@
 </body>
 <script>
 	$(document).ready(function () {
-		$("form").submit(function(){
-				$(".overlay").show();
-				$(".loading").show();
-				$.ajax({
+		$("form").submit(function () {
+			$(".overlay").show();
+			$(".loading").show();
+			$.ajax({
 				url: "/register",
 				data: $('form').serialize(),
 				type: "POST",
@@ -102,9 +102,9 @@
 					console.log("I am in error")
 					swal("OOPS", "Error in Connection!!Try Again!", "error");
 				}
-			});		
-            return false;
-            });
+			});
+			return false;
+		});
 	});
 </script>
 
