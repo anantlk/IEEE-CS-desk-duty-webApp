@@ -1,10 +1,9 @@
 
 import subprocess
-
+import zipfile
 from flask import Flask, render_template, request
-
 from scrapers import timetable
-from utilities import get_free_time, store_details
+from utilities import get_free_time, store_details,interact_database
 
 app = Flask(__name__)
 
@@ -39,6 +38,12 @@ def get_free_members():
         request.args['day'], request.args['time'], request.args['year'])
     return ''.join(mem + "," for mem in free_members)
 
+@app.route("/get_desk_duty",methods = ["GET"])
+def get_desk_duty():
+    day = request.args["day"]
+    print(day)
+    if(interact_database.get_details(day)):
+        return "success"
 
 if __name__ == "__main__":
     app.run()
