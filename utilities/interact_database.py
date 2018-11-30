@@ -1,6 +1,6 @@
 import os
 import sys
-path = os.getcwd();
+path = os.getcwd()
 sys.path.insert(0, path)
 from pymongo import MongoClient
 from .generate_duty import generate_desk_duty
@@ -37,20 +37,21 @@ def check_database(regno, batch):
 def insert(details, batch):
     if batch == "16":
         det = db.stud_det_16
-        result = det.insert_one(details)
+        det.insert_one(details)
     if batch == "17":
         det = db.stud_det_17
-        result = det.insert_one(details)
+        det.insert_one(details)
 
 
 def update(day, schd):
     time_table = db.table
     time_table.update_one({"day": day}, {"$push": {"schedule": schd}})
 
+
 def get_details(day):
     docs = db.table.find()
     stud_names = db.stud_det_17.find()
-    result = generate_desk_duty.generate(day,stud_names,docs)
+    result = generate_desk_duty.generate(day, stud_names, docs)
     if(result):
         return True
     else:

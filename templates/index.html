@@ -73,7 +73,7 @@
 			</div>
 		</form>
 		<div class="row col s12" style="text-align:center;">
-			<button class=" btn waves-effect waves-light " onclick="generateDuty()">Generate Desk Duty</button>
+			<button class=" btn waves-effect waves-light" onclick="generateDuty()">Generate Desk Duty</button>
 		</div>
 	</div>
 </body>
@@ -82,31 +82,31 @@
 		window.location.href = '/generate_desk_duty'
 	}
 	$(document).ready(function () {
-		$("form ").submit(function () {
-			$(".overlay ").show();
-			$(".loading ").show();
+		$("form").submit(function () {
+			$(".overlay").show();
+			$(".loading").show();
 			$.ajax({
-				url: "/register ",
+				url:"/register",
 				data: $('form').serialize(),
-				type: "POST ",
+				type:"POST",
 				success: function (msg) {
-					$(".overlay ").hide();
-					$(".loading ").hide();
-					console.log(msg + "I am in success ")
-					if (msg == "success ")
-						swal("Success ", "Succesfully Registered! ", "success ");
-					if (msg == "exists ")
-						swal("OOPS ", "User Already Registered! ", "error ");
-					if (msg == "Incorrect ")
-						swal("OOPS ", "Incorrect Credentials! ", "error ");
+					$(".overlay").hide();
+					$(".loading").hide();
+					console.log(msg +"I am in success")
+					if (msg =="success")
+						swal("Success","Succesfully Registered!","success");
+					if (msg =="exists")
+						swal("OOPS","User Already Registered!","error");
+					if (msg =="Incorrect")
+						swal("OOPS","Incorrect Credentials!","error");
 
 				},
 				error: function (msg) {
 					console.log(msg);
-					$(".overlay ").hide();
-					$(".loading ").hide();
-					console.log("I am in error ")
-					swal("OOPS ", "Error in Connection!!Try Again! ", "error ");
+					$(".overlay").hide();
+					$(".loading").hide();
+					console.log("I am in error")
+					swal("OOPS","Error in Connection!!Try Again!","error");
 				}
 			});
 			return false;

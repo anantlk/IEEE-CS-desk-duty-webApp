@@ -2,19 +2,23 @@
 import subprocess
 import zipfile
 import os
-from flask import Flask, render_template, request,send_file,Response
+from flask import Flask, render_template, request, send_file, Response
 from scrapers import timetable
-from utilities import get_free_time, store_details,interact_database
+from utilities import get_free_time, store_details, interact_database
 
 app = Flask(__name__)
-    
+
+
 @app.route("/")
 def main():
+    print("lalalal")
     return render_template('index.html')
+
 
 @app.route("/generate_desk_duty")
 def form():
     return render_template('form.html')
+
 
 @app.route("/register", methods=['POST'])
 def register():
@@ -41,25 +45,28 @@ def get_free_members():
         request.args['day'], request.args['time'], request.args['year'])
     return ''.join(mem + "," for mem in free_members)
 
-@app.route("/get_desk_duty",methods = ["GET"])
+
+@app.route("/get_desk_duty", methods=["GET"])
 def get_desk_duty():
     day = request.args["day"]
     print(day)
     if(interact_database.get_details(day)):
-        path = os.getcwd();
+        path = os.getcwd()
         zipf = zipfile.ZipFile('result.zip', 'w', zipfile.ZIP_DEFLATED)
-        for root, dirs, files in os.walk(path + "/table"):
-            print(root);
+        for root, _, files in os.walk(path + "/table"):
+            print(root)
             dest_dir = root.replace(os.path.dirname(path), '', 1)
             for file in files:
-                zipf.write(os.path.join(root, file), arcname=os.path.join(dest_dir, file))
+                zipf.write(os.path.join(root, file),
+                           arcname=os.path.join(dest_dir, file))
         zipf.close()
         return send_file(path + '/result.zip',
-                     mimetype='text/zip',
-                     attachment_filename='result.zip',
-                     as_attachment=True) 
+                         mimetype='text/zip',
+                         attachment_filename='result.zip',
+                         as_attachment=True)
     else:
         return "Failed"
+
 
 if __name__ == "__main__":
     app.run()
