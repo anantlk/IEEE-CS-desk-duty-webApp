@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    print("lalalal")
     return render_template('index.html')
 
 

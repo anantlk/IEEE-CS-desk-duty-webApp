@@ -11,7 +11,7 @@ import email.utils
 from utilities import interact_database
 from utilities.captchaparser import solve_captcha
 
-SEMESTER_ID = os.environ.get("SEMESTER_ID")
+SEMESTER_ID = os.environ.get("SEMESTER_ID") or "VL2018195"
 
 HEADERS = {
     "cache-control": "no-cache",
@@ -24,7 +24,7 @@ HEADERS = {
 }
 
 
-def login_user(regno, password):
+def login_user(regno, password, attempts=0):
     try:
         if regno[:2] == "16":
             if interact_database.check_database(regno, "16") == 0:
@@ -33,18 +33,41 @@ def login_user(regno, password):
             if interact_database.check_database(regno, "17") == 0:
                 return 2
 
-        res = requests.get(
-            'https://vtop.vit.ac.in/vtop', headers=HEADERS, verify=False)
-        print(res.cookies.get_dict())
+        print("Fetching initial Cookie")
+        # initial cookie fetch
+        res = requests.get('https://vtop.vit.ac.in/vtop',
+                           headers=HEADERS, verify=False)
         HEADERS.update({"Cookie": "JSESSIONID=" + res.cookies["JSESSIONID"]})
+
+        print("fetching serverid")
+        # request to get serverID
+        res = requests.get(
+            'https://vtop.vit.ac.in/vtop/initialProcess', headers=HEADERS, verify=False)
+        if "Session Timed out" in res.text and attempts < 5:
+            print("re-attempting")
+            del HEADERS['Cookie']
+            return login_user(regno, password, attempts + 1)
+
+        root = BeautifulSoup(res.text, "html.parser")
+        HEADERS.update({"Cookie": "JSESSIONID=" +
+                        res.cookies["JSESSIONID"] + ";SERVERID=" + res.cookies["SERVERID"]})
+        HEADERS.update(
+            {"referer": "https://vtop.vit.ac.in/vtop/initialProcess"})
+
+        print("Attempting login")
+        # request to open the login page
         res = requests.post(
             'https://vtop.vit.ac.in/vtop/vtopLogin',
             headers=HEADERS,
             verify=False)
+        if "Session Timed out" in res.text:
+            print("re-attempting")
+            del HEADERS['Cookie']
+            return login_user(regno, password, attempts + 1)
 
         # captcha solving
         root = BeautifulSoup(res.text, "html.parser")
-        print(root.prettify())
+
         img_data = root.find_all("img")[1]["src"].strip(
             "data:image/png;base64,")
         img = Image.open(BytesIO(base64.b64decode(img_data)))
