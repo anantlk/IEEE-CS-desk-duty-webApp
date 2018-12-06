@@ -7,17 +7,18 @@
 	<meta name="viewport" content="width = device-width, initial-scale = 1">
 	<meta name="description" content="IEEE CS details register">
 	<meta name="author" content="Anant Kakrania">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-	<link rel="stylesheet" href="/static/stylesheets/style.css">
-
+	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="/static/stylesheets/style.css">
 </head>
 
-<body>
+<body style="background-color: black; font-family: 'Lato', sans-serif;">
 	<div class="overlay">
 	</div>
 	<div class="loading row">
@@ -31,7 +32,7 @@
 		</div>
 	</div>
 	<div class="row" style="text-align:center;">
-		<img id="logo" src="/static/images/CS-logo.png" />
+		<img id="logo" src="/static/images/CS-logo-new.png" />
 	</div>
 	<div class="row">
 		<form class="col s10 offset-s1" name="register">
@@ -64,16 +65,16 @@
 					<input id="mobile" name="mobile" type="text" pattern="[0-9]{10}" class="validate" required/>
 				</div>
 				<div class="input-field col s12">
-					<div class="btn waves-effect waves-light col offset-s4 offset-m5">
-						<input type="submit">
+					<div class="btn waves-effect waves-light col offset-s4 offset-m5" style="background-color: darkorange; ">
+						<input type="submit" style="color:black; font-weight: bold">
 						</input>
-						<i class="material-icons right">send</i>
+						<i class="material-icons right" style="color:black">send</i>
 					</div>
 				</div>
 			</div>
 		</form>
 		<div class="row col s12" style="text-align:center;">
-			<button class=" btn waves-effect waves-light" onclick="generateDuty()">Generate Desk Duty</button>
+			<button class=" btn waves-effect waves-light" style="background-color: darkorange; color: black" onclick="generateDuty()"><b>Generate Desk Duty</b></button>
 		</div>
 	</div>
 </body>
