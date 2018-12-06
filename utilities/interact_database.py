@@ -12,6 +12,7 @@ DB_PORT = os.environ.get("DB_PORT")
 DB_USER = os.environ.get("DB_USER")
 DB_PASS = os.environ.get("DB_PASS")
 
+
 CONNECTION = MongoClient(DB_HOST, int(DB_PORT))
 db = CONNECTION[DB_NAME]
 db.authenticate(DB_USER, DB_PASS)

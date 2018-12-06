@@ -6,17 +6,21 @@ from io import BytesIO
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
+import email.utils
 
 from utilities import interact_database
 from utilities.captchaparser import solve_captcha
 
 SEMESTER_ID = os.environ.get("SEMESTER_ID")
-# SEMESTER_ID = "VL2018191"
 
 HEADERS = {
-    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64)\
-        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 \
-        Safari/537.36'
+    "cache-control": "no-cache",
+    "accept-language": "en-US,en;q=0.9",
+    "accept-encoding": "gzip, deflate, br",
+    "dnt": "1",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.56 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
 }
 
 
@@ -30,24 +34,17 @@ def login_user(regno, password):
                 return 2
 
         res = requests.get(
-            'https://vtopbeta.vit.ac.in/vtop/', headers=HEADERS, verify=False)
+            'https://vtop.vit.ac.in/vtop', headers=HEADERS, verify=False)
+        print(res.cookies.get_dict())
         HEADERS.update({"Cookie": "JSESSIONID=" + res.cookies["JSESSIONID"]})
-        root = BeautifulSoup(res.text, "html.parser")
-        gsid_index = root.text.find("gsid=")
-        gsid = root.text[gsid_index:gsid_index + 12]
-        if gsid[-1] == ';':
-            gsid = gsid[:-1]
-        res = requests.get(
-            'https://vtopbeta.vit.ac.in/vtop/executeApp?' + gsid,
-            headers=HEADERS,
-            verify=False)
         res = requests.post(
-            'https://vtopbeta.vit.ac.in/vtop/getLogin',
+            'https://vtop.vit.ac.in/vtop/vtopLogin',
             headers=HEADERS,
             verify=False)
+
         # captcha solving
-        HEADERS.update({"Cookie": "JSESSIONID=" + res.cookies["JSESSIONID"]})
         root = BeautifulSoup(res.text, "html.parser")
+        print(root.prettify())
         img_data = root.find_all("img")[1]["src"].strip(
             "data:image/png;base64,")
         img = Image.open(BytesIO(base64.b64decode(img_data)))
@@ -58,7 +55,7 @@ def login_user(regno, password):
             'captchaCheck': captcha_check
         }
         res = requests.post(
-            'https://vtopbeta.vit.ac.in/vtop/processLogin',
+            'https://vtop.vit.ac.in/vtop/doLogin',
             data=login_data,
             headers=HEADERS,
             verify=False)
@@ -144,18 +141,19 @@ def parse_table(timetable_html):
     return schedule
 
 
-def timetable_scrape():
+def timetable_scrape(regno):
 
     timetable = requests.post(
-        'https://vtopbeta.vit.ac.in/vtop/processViewTimeTable',
+        'https://vtop.vit.ac.in/vtop/processViewTimeTable',
         headers=HEADERS,
-        data={'semesterSubId': SEMESTER_ID},
+        data={'semesterSubId': SEMESTER_ID, 'authorizedID': regno,
+              'x': email.utils.formatdate(usegmt=True)},
         verify=False)
     schedule = parse_table(timetable)
-    
+
     # logout
     requests.post(
-        'https://vtopbeta.vit.ac.in/vtop/processLogout', verify=False)
+        'https://vtop.vit.ac.in/vtop/processLogout', verify=False)
     del HEADERS['Cookie']
     return schedule
 
@@ -163,12 +161,8 @@ def timetable_scrape():
 def get_timetable(user, password):
     login_result = login_user(user, password)
     if login_result == 1:
-        return timetable_scrape()
+        return timetable_scrape(user)
     else:
         requests.post(
-            'https://vtopbeta.vit.ac.in/vtop/processLogout', verify=False)
+            'https://vtop.vit.ac.in/vtop/processLogout', verify=False)
         return login_result
-
-
-if __name__ == "__main__":
-    get_timetable("16BCE0979", "Presto412@Priyansh")
